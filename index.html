@@ -5,16 +5,10 @@
 <title>Move — Migration Planner</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="icon" href="data:image/svg+xml,
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 32'>
-<rect width='64' height='16' y='0' fill='%2374acdf'/>
-<rect width='64' height='8' y='16' fill='%23ffffff'/>
-<rect width='64' height='8' y='24' fill='%23aa151b'/>
-</svg>">
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+/* === VARIABLES === */
 :root{
   --bg:#f6f3ec;
   --surface:#ffffff;
@@ -28,8 +22,10 @@
   --shadow:0 14px 34px rgba(0,0,0,0.08);
 }
 
+/* === RESET === */
 *{box-sizing:border-box;margin:0;padding:0;}
 
+/* === BASE === */
 body{
   font-family:'Inter',system-ui,sans-serif;
   background:linear-gradient(180deg,#f9f6ef 0%, #f3efe6 100%);
@@ -39,28 +35,77 @@ body{
 
 .app{max-width:1200px;margin:0 auto;}
 
+/* === BRAND === */
 .branding{
   background:var(--surface);
   border-radius:36px;
-  padding:48px 32px;
-  margin-bottom:56px;
+  padding:32px 32px;
+  margin-bottom:24px;
   box-shadow:var(--shadow);
   border:2px solid var(--gold);
-  text-align:center;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
 }
 
 .brand-title{
   font-family:'Cinzel',serif;
-  font-size:2.6rem;
+  font-size:2.2rem;
   letter-spacing:0.1em;
   color:var(--blue);
 }
 
-.brand-sub{margin-top:6px;color:var(--muted);}
+.brand-sub{margin-top:4px;color:var(--muted);font-size:0.9rem;}
 
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:48px;}
+/* === COUNTDOWN === */
+.countdown{
+  text-align:right;
+  font-size:0.85rem;
+  color:var(--red);
+}
+
+.countdown span{
+  display:inline-block;
+  min-width:60px;
+  font-weight:600;
+}
+
+/* === CONFIG === */
+.config{
+  background:var(--surface);
+  border-radius:var(--radius);
+  padding:24px;
+  margin-bottom:32px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+}
+
+.config h2{
+  font-family:'Cinzel',serif;
+  color:var(--red);
+  margin-bottom:16px;
+}
+
+.config-row{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
+
+.config-row input, .config-row select{
+  padding:6px 10px;
+  border-radius:10px;
+  border:1px solid var(--border);
+}
+
+/* === GRID === */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:32px;}
 @media(max-width:900px){.grid{grid-template-columns:1fr;}}
 
+/* === CARD === */
 .card{
   background:var(--surface);
   border-radius:var(--radius);
@@ -76,6 +121,7 @@ body{
   margin-bottom:18px;
 }
 
+/* === LIST === */
 ul{list-style:none;}
 li{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);gap:12px;}
 li:last-child{border-bottom:none;}
@@ -89,19 +135,11 @@ select{
   background:#fff;
 }
 
-.link{
-  font-size:0.7rem;
-  padding:3px 8px;
-  border-radius:999px;
-  background:rgba(198,162,79,0.15);
-  color:var(--blue);
-  text-decoration:none;
-}
-
+/* === FOOTER === */
 .footer{
   background:var(--surface);
   border-radius:var(--radius);
-  padding:28px;
+  padding:24px;
   box-shadow:var(--shadow);
   border:2px solid var(--gold);
 }
@@ -120,9 +158,7 @@ select{
 
 .progress-bar{
   position:absolute;
-  left:0;
-  top:0;
-  height:100%;
+  left:0;top:0;height:100%;
   background:linear-gradient(90deg,var(--blue),var(--gold),var(--red));
   width:0%;
   transition:width 0.4s ease;
@@ -141,17 +177,35 @@ select{
 
 <div class="app">
 
+<!-- HEADER -->
 <div class="branding">
-  <div class="brand-title">MOVE</div>
-  <div class="brand-sub">Tu mudanza, diseñada con calma.</div>
+  <div>
+    <div class="brand-title">MOVE</div>
+    <div class="brand-sub">Tu mudanza, diseñada con calma.</div>
+  </div>
+  <div class="countdown" id="countdown"></div>
 </div>
 
-<div class="grid">
-  <div class="card"><h2>Rodri</h2><ul id="rodri"></ul></div>
-  <div class="card"><h2>Mai</h2><ul id="mai"></ul></div>
-  <div class="card"><h2>Ambos</h2><ul id="ambos"></ul></div>
+<!-- CONFIGURACIÓN -->
+<div class="config">
+  <h2>Configuración</h2>
+  <div class="config-row">
+    <label>Fecha del viaje:
+      <input type="datetime-local" id="dateInput">
+    </label>
+  </div>
+  <div class="config-row">
+    <label>¿Cuántas personas?
+      <input type="number" id="peopleCount" min="1" max="5" value="2">
+    </label>
+  </div>
+  <div id="peopleConfig"></div>
 </div>
 
+<!-- CHECKLIST -->
+<div class="grid" id="checklistGrid"></div>
+
+<!-- PROGRESO -->
 <div class="footer">
   <h2 style="text-align:center;font-family:'Cinzel',serif;color:var(--red);margin-bottom:16px;">Progreso</h2>
   <div class="progress-wrap">
@@ -167,94 +221,83 @@ select{
 </div>
 
 <script>
-const data = {
-  rodri: [
-    ["Pasaporte argentino","https://www.argentina.gob.ar/interior/dni/pasaporte"],
-    ["Pasaporte español","https://www.exteriores.gob.es/Consulados/buenosaires/es/ViajarA/Paginas/Documentacion.aspx"],
-    ["DNI","https://www.argentina.gob.ar/interior/dni"],
-    ["CUIL","https://www.anses.gob.ar/consultas/constancia-de-cuil"],
-    ["Licencia apostillada","https://www.argentina.gob.ar/cancilleria/apostilla"],
-    ["Analítico apostillado","https://www.argentina.gob.ar/cancilleria/apostilla"],
-    ["Antecedentes apostillados","https://www.argentina.gob.ar/justicia/reincidencia"],
-    ["Registro unión convivencial","https://www.argentina.gob.ar/justicia/registro-civil"],
-    ["Seguro médico","https://www.axa-schengen.com"],
-    ["Comprar pasaje","https://www.skyscanner.com"]
-  ],
-  mai: [
-    ["Pasaporte","https://www.argentina.gob.ar/interior/dni/pasaporte"],
-    ["Analítico apostillado","https://www.argentina.gob.ar/cancilleria/apostilla"],
-    ["Antecedentes apostillados","https://www.argentina.gob.ar/justicia/reincidencia"],
-    ["Certificado nacimiento apostillado","https://www.argentina.gob.ar/cancilleria/apostilla"],
-    ["Seguro médico","https://www.axa-schengen.com"],
-    ["Comprar pasaje","https://www.skyscanner.com"],
-    ["Reserva alojamiento","https://www.airbnb.com"],
-    ["Empadronamiento","https://www.madrid.es/portales/munimadrid/es/Inicio/Servicios-sociales-y-salud/Padron-municipal"],
-    ["Solicitud residencia","https://www.exteriores.gob.es/Consulados/buenosaires/es/ServiciosConsulares/Paginas/Visados.aspx"]
-  ],
-  ambos: [
-    ["Unión convivencial","https://www.argentina.gob.ar/justicia/registro-civil"],
-    ["Apostilla unión","https://www.argentina.gob.ar/cancilleria/apostilla"],
-    ["Contrato en España",""],
-    ["Turno extranjería","https://sede.administracionespublicas.gob.es/pagina/index/directorio/icpplus"],
-    ["NIE","https://sede.administracionespublicas.gob.es/pagina/index/directorio/icpplus"],
-    ["TIE","https://sede.administracionespublicas.gob.es/pagina/index/directorio/icpplus"],
-    ["Cuenta bancaria",""],
-    ["Canje licencia","https://www.dgt.es"]
-  ]
-};
+let people = [];
 
-function render(section){
-  const ul=document.getElementById(section);
-  data[section].forEach(([text,link])=>{
-    const key=section+"_"+text;
-    const li=document.createElement("li");
+const baseTasksEU = ["Empadronamiento","Cuenta bancaria","Canje licencia"];
+const baseTasksNoEU = ["Solicitud visa","NIE","TIE"];
 
-    const span=document.createElement("span");
-    span.className="item";
-    span.textContent=text;
+document.getElementById("peopleCount").addEventListener("change",renderPeopleConfig);
+document.getElementById("dateInput").addEventListener("change",updateCountdown);
 
-    const sel=document.createElement("select");
-    ["Pendiente","En proceso","Hecho"].forEach(s=>{
-      const o=document.createElement("option");
-      o.value=s; o.text=s;
-      sel.appendChild(o);
-    });
-    sel.value=localStorage.getItem(key)||"Pendiente";
-    sel.onchange=()=>{localStorage.setItem(key,sel.value);update();};
-
-    li.appendChild(span);
-    li.appendChild(sel);
-
-    if(link){
-      const a=document.createElement("a");
-      a.href=link; a.target="_blank"; a.textContent="Abrir guía";
-      a.className="link";
-      li.appendChild(a);
-    }
-
-    ul.appendChild(li);
-  });
-}
-
-function update(){
-  let total=0,done=0;
-  for(const sec in data){
-    data[sec].forEach(([text])=>{
-      total++;
-      if(localStorage.getItem(sec+"_"+text)==="Hecho") done++;
-    });
+function renderPeopleConfig(){
+  const n = parseInt(document.getElementById("peopleCount").value);
+  const container = document.getElementById("peopleConfig");
+  container.innerHTML="";
+  people=[];
+  for(let i=0;i<n;i++){
+    const row=document.createElement("div");
+    row.className="config-row";
+    row.innerHTML = `
+      <input placeholder="Nombre" onchange="people[${i}]={...people[${i}],name:this.value}">
+      <select onchange="people[${i}]={...people[${i}],eu:this.value==='yes'}">
+        <option value="no">Sin ciudadanía UE</option>
+        <option value="yes">Con ciudadanía UE</option>
+      </select>
+    `;
+    container.appendChild(row);
   }
-  const percent = total ? (done/total)*100 : 0;
-  document.getElementById("bar").style.width = percent + "%";
-  document.getElementById("plane").style.left = percent + "%";
 }
 
-render("rodri");
-render("mai");
-render("ambos");
-update();
+function renderChecklist(){
+  const grid=document.getElementById("checklistGrid");
+  grid.innerHTML="";
+  people.forEach((p,i)=>{
+    const card=document.createElement("div");
+    card.className="card";
+    card.innerHTML=`<h2>${p.name||"Persona "+(i+1)}</h2><ul></ul>`;
+    const ul=card.querySelector("ul");
+    const tasks = p.eu ? baseTasksEU : baseTasksNoEU;
+    tasks.forEach(t=>{
+      const li=document.createElement("li");
+      li.innerHTML=`<span class="item">${t}</span><select><option>Pendiente</option><option>Hecho</option></select>`;
+      ul.appendChild(li);
+    });
+    grid.appendChild(card);
+  });
+  updateProgress();
+}
+
+function updateProgress(){
+  let total=0,done=0;
+  document.querySelectorAll(".grid select").forEach(s=>{
+    total++;
+    if(s.value==="Hecho") done++;
+    s.onchange=updateProgress;
+  });
+  const percent = total?done/total*100:0;
+  document.getElementById("bar").style.width=percent+"%";
+  document.getElementById("plane").style.left=percent+"%";
+}
+
+function updateCountdown(){
+  const target = new Date(document.getElementById("dateInput").value);
+  if(!target) return;
+  setInterval(()=>{
+    const now=new Date();
+    let diff=target-now;
+    if(diff<0) diff=0;
+    const s=Math.floor(diff/1000)%60;
+    const m=Math.floor(diff/60000)%60;
+    const h=Math.floor(diff/3600000)%24;
+    const d=Math.floor(diff/86400000)%30;
+    const mo=Math.floor(diff/2592000000);
+    document.getElementById("countdown").innerHTML =
+      `${mo}m ${d}d ${h}h ${m}m ${s}s`;
+  },1000);
+}
+
+renderPeopleConfig();
 </script>
 
 </body>
 </html>
-

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Move — Migration Planner</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -20,6 +21,8 @@ body{font-family:'Inter',sans-serif;background:linear-gradient(180deg,#f9f6ef,#f
 .brand-title{font-family:'Cinzel',serif;font-size:2.2rem;color:var(--blue);}
 .brand-sub{color:var(--muted);}
 
+.countdown{color:var(--red);margin-top:6px;font-size:0.9rem;}
+
 .view{display:none;}
 .view.active{display:block;}
 
@@ -29,15 +32,16 @@ body{font-family:'Inter',sans-serif;background:linear-gradient(180deg,#f9f6ef,#f
 input,select{padding:6px 10px;border-radius:8px;border:1px solid var(--border);}
 
 button{padding:10px 18px;border-radius:999px;border:none;background:var(--blue);color:white;font-weight:600;cursor:pointer;}
-button:hover{opacity:0.9;}
 
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
 @media(max-width:900px){.grid{grid-template-columns:1fr;}}
 
 .card h2{font-family:'Cinzel',serif;color:var(--red);text-align:center;margin-bottom:12px;}
 ul{list-style:none;}
-li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
-.item{flex:1;}
+li{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
+.item{flex:1;font-size:0.9rem;}
+
+.link{font-size:0.7rem;padding:3px 8px;border-radius:999px;background:rgba(198,162,79,0.15);color:var(--blue);text-decoration:none;}
 
 .progress-wrap{display:flex;align-items:center;gap:10px;}
 .progress-container{flex:1;height:16px;background:#e5e1d8;border-radius:8px;overflow:hidden;position:relative;}
@@ -52,6 +56,7 @@ li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px so
 <div class="branding">
   <div class="brand-title">MOVE</div>
   <div class="brand-sub">Tu mudanza, diseñada con calma.</div>
+  <div class="countdown" id="countdown"></div>
 </div>
 
 <div id="configView" class="view active">
@@ -86,9 +91,23 @@ li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px so
 </div>
 
 <script>
+const masterTasks = {
+  eu: [
+    ["Empadronamiento","https://www.boe.es"],
+    ["Cuenta bancaria",""],
+    ["Canje licencia","https://www.dgt.es"]
+  ],
+  noEu: [
+    ["Solicitud visa","https://www.exteriores.gob.es"],
+    ["NIE","https://sede.administracionespublicas.gob.es"],
+    ["TIE","https://sede.administracionespublicas.gob.es"]
+  ]
+};
+
 let people=[];
 
-document.getElementById("peopleCount").onchange=renderPeopleConfig;
+peopleCount.onchange=renderPeopleConfig;
+dateInput.onchange=updateCountdown;
 
 function renderPeopleConfig(){
   const n=+peopleCount.value;
@@ -110,26 +129,27 @@ function renderPeopleConfig(){
 renderPeopleConfig();
 
 function start(){
-  document.getElementById("configView").classList.remove("active");
-  document.getElementById("appView").classList.add("active");
+  configView.classList.remove("active");
+  appView.classList.add("active");
   renderChecklist();
 }
 
 function renderChecklist(){
-  const grid=document.getElementById("checklistGrid");
-  grid.innerHTML="";
+  checklistGrid.innerHTML="";
   people.forEach((p,i)=>{
     const card=document.createElement("div");
     card.className="card";
     card.innerHTML=`<h2>${p.name||"Persona "+(i+1)}</h2><ul></ul>`;
     const ul=card.querySelector("ul");
-    const tasks=p.eu?["Empadronamiento","Cuenta bancaria","Canje licencia"]:["Solicitud visa","NIE","TIE"];
-    tasks.forEach(t=>{
+    const tasks = p.eu ? masterTasks.eu : masterTasks.noEu;
+    tasks.forEach(([t,link])=>{
       const li=document.createElement("li");
-      li.innerHTML=`<span class="item">${t}</span><select onchange="updateProgress()"><option>Pendiente</option><option>Hecho</option></select>`;
+      li.innerHTML=`<span class="item">${t}</span>
+        <select onchange="updateProgress()"><option>Pendiente</option><option>Hecho</option></select>
+        ${link?`<a class="link" href="${link}" target="_blank">Abrir guía</a>`:""}`;
       ul.appendChild(li);
     });
-    grid.appendChild(card);
+    checklistGrid.appendChild(card);
   });
   updateProgress();
 }
@@ -144,12 +164,21 @@ function updateProgress(){
   bar.style.width=percent+"%";
   plane.style.left=percent+"%";
 }
-</script>
 
-</body>
-</html>
-
-renderPeopleConfig();
+function updateCountdown(){
+  const target=new Date(dateInput.value);
+  setInterval(()=>{
+    const now=new Date();
+    let diff=target-now;
+    if(diff<0) diff=0;
+    const s=Math.floor(diff/1000)%60;
+    const m=Math.floor(diff/60000)%60;
+    const h=Math.floor(diff/3600000)%24;
+    const d=Math.floor(diff/86400000)%30;
+    const mo=Math.floor(diff/2592000000);
+    countdown.textContent=`${mo}m ${d}d ${h}h ${m}m ${s}s`;
+  },1000);
+}
 </script>
 
 </body>

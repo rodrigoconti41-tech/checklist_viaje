@@ -2,241 +2,217 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Checklist viaje a España</title>
+<title>Move — Planificador de mudanza</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg:#f4f6f8;
+:root{
+  --bg:#f7f9fc;
   --card:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b;
   --primary:#2563eb;
   --accent:#f97316;
-  --soft:#14b8a6;
   --border:#e2e8f0;
-  --radius:18px;
+  --radius:20px;
 }
 
-* { box-sizing:border-box; }
+*{box-sizing:border-box;}
 
-body {
+body{
   margin:0;
-  font-family:'Manrope',system-ui,sans-serif;
-  background: linear-gradient(180deg,#eef2f7 0%, #fdfefe 100%);
-  color:#0f172a;
-  padding:24px;
-  animation: fadeIn 0.6s ease;
+  background:var(--bg);
+  font-family:'Inter',system-ui,sans-serif;
+  color:var(--text);
+  padding:40px 20px;
 }
 
-@keyframes fadeIn {
-  from { opacity:0; transform:translateY(8px); }
-  to { opacity:1; transform:translateY(0); }
+.app{
+  max-width:1100px;
+  margin:0 auto;
 }
 
-h1 {
-  text-align:center;
-  margin-bottom:12px;
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:40px;
+}
+
+.brand{
+  font-size:1.5rem;
   font-weight:700;
 }
 
-.subtitle {
-  text-align:center;
-  color:#475569;
-  margin-bottom:32px;
+.brand span{
+  color:var(--primary);
 }
 
-.hero {
-  display:flex;
-  gap:20px;
-  margin-bottom:32px;
-  flex-wrap:wrap;
+.tagline{
+  color:var(--muted);
+  font-size:0.95rem;
 }
 
-.hero img {
-  flex:1;
-  min-width:280px;
-  height:180px;
-  object-fit:cover;
-  border-radius:18px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.08);
-  animation: float 6s ease-in-out infinite;
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:24px;
 }
 
-.hero img:nth-child(2) { animation-delay:3s; }
-
-@keyframes float {
-  0%,100% { transform:translateY(0); }
-  50% { transform:translateY(-6px); }
-}
-
-.section {
+.card{
   background:var(--card);
   border-radius:var(--radius);
-  padding:20px;
-  margin-bottom:24px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.05);
-  animation: pop 0.5s ease;
+  padding:24px;
+  box-shadow:0 12px 30px rgba(15,23,42,0.04);
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-@keyframes pop {
-  from { transform:scale(0.97); opacity:0; }
-  to { transform:scale(1); opacity:1; }
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 40px rgba(15,23,42,0.08);
 }
 
-.section h2 {
+.card h2{
   margin-top:0;
-  padding-bottom:8px;
-  border-bottom:1px solid var(--border);
-  font-weight:600;
+  font-size:1.1rem;
+  margin-bottom:16px;
 }
 
-li {
+li{
+  list-style:none;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:6px 0;
-  border-bottom:1px dashed var(--border);
-  gap:10px;
+  padding:8px 0;
+  border-bottom:1px solid var(--border);
 }
 
-li:last-child { border-bottom:none; }
+li:last-child{border-bottom:none;}
 
-.item {
+.item{
   flex:1;
+  font-size:0.95rem;
 }
 
-select {
-  padding:4px 10px;
-  border-radius:10px;
+select{
   border:1px solid var(--border);
+  border-radius:999px;
+  padding:4px 10px;
   background:#fff;
-  font-family:'Manrope',sans-serif;
+  font-size:0.8rem;
 }
 
-a {
-  font-size:0.8em;
+a{
+  font-size:0.7rem;
   color:var(--primary);
+  margin-left:6px;
   text-decoration:none;
 }
 
-a:hover { text-decoration:underline; }
-
-.progress-wrap {
+.footer{
+  margin-top:40px;
   background:var(--card);
   border-radius:var(--radius);
-  padding:20px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.05);
+  padding:24px;
+  box-shadow:0 12px 30px rgba(15,23,42,0.04);
 }
 
-progress {
+progress{
   width:100%;
-  height:22px;
-  border-radius:11px;
+  height:16px;
+  border-radius:8px;
   overflow:hidden;
 }
 
-progress::-webkit-progress-bar {
-  background:#e5e7eb;
-  border-radius:11px;
-}
-progress::-webkit-progress-value {
-  background:linear-gradient(90deg,var(--primary),var(--accent),var(--soft));
-  border-radius:11px;
+progress::-webkit-progress-bar{background:#e5e7eb;}
+progress::-webkit-progress-value{
+  background:linear-gradient(90deg,var(--primary),var(--accent));
   transition:width 0.4s ease;
 }
 
-@media (max-width:600px){
-  li { flex-direction:column; align-items:flex-start; }
-  .hero img { height:150px; }
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 
-<h1>Checklist de tu mudanza a España</h1>
-<div class="subtitle">De Argentina al mundo ✨</div>
+<div class="app">
+  <header>
+    <div>
+      <div class="brand">Move<span>.</span></div>
+      <div class="tagline">Tu mudanza, ordenada.</div>
+    </div>
+  </header>
 
-<div class="hero">
-  <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=900&q=60" alt="Buenos Aires">
-  <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=900&q=60" alt="España">
-</div>
+  <div class="grid">
+    <div class="card"><h2>Rodri</h2><ul id="rodri"></ul></div>
+    <div class="card"><h2>Mai</h2><ul id="mai"></ul></div>
+    <div class="card"><h2>Ambos</h2><ul id="ambos"></ul></div>
+  </div>
 
-<div class="section"><h2>Rodri</h2><ul id="rodri"></ul></div>
-<div class="section"><h2>Mai</h2><ul id="mai"></ul></div>
-<div class="section"><h2>Ambos</h2><ul id="ambos"></ul></div>
-
-<div class="progress-wrap">
-  <h2>Progreso</h2>
-  <progress id="prog" value="0" max="1"></progress>
+  <div class="footer">
+    <h2>Progreso</h2>
+    <progress id="prog" value="0" max="1"></progress>
+  </div>
 </div>
 
 <script>
 const data = {
   rodri: [
-    ["Pasaporte argentino vigente","https://www.argentina.gob.ar/interior/dni/pasaporte"],
-    ["Pasaporte español vigente","https://www.exteriores.gob.es"],
-    ["DNI argentino","https://www.argentina.gob.ar/interior/dni"],
-    ["CUIL","https://www.anses.gob.ar/consultas/constancia-de-cuil"],
+    ["Pasaporte argentino","https://www.argentina.gob.ar/interior/dni/pasaporte"],
+    ["Pasaporte español","https://www.exteriores.gob.es"],
+    ["DNI","https://www.argentina.gob.ar/interior/dni"],
+    ["CUIL","https://www.anses.gob.ar"],
     ["Licencia apostillada","https://www.argentina.gob.ar/cancilleria/apostilla"],
     ["Analítico apostillado","https://www.argentina.gob.ar/cancilleria/apostilla"],
     ["Antecedentes apostillados","https://www.argentina.gob.ar/justicia/reincidencia"],
     ["Registro unión convivencial","https://www.argentina.gob.ar/justicia/registro-civil"],
-    ["CV armado",""],
     ["Seguro médico","https://www.axa-schengen.com"],
-    ["Comprar pasaje","https://www.skyscanner.com"],
-    ["Copias digitales",""]
+    ["Comprar pasaje","https://www.skyscanner.com"]
   ],
   mai: [
-    ["Pasaporte vigente","https://www.argentina.gob.ar/interior/dni/pasaporte"],
+    ["Pasaporte","https://www.argentina.gob.ar/interior/dni/pasaporte"],
     ["Analítico apostillado","https://www.argentina.gob.ar/cancilleria/apostilla"],
     ["Antecedentes apostillados","https://www.argentina.gob.ar/justicia/reincidencia"],
     ["Certificado nacimiento apostillado","https://www.argentina.gob.ar/cancilleria/apostilla"],
     ["Seguro médico","https://www.axa-schengen.com"],
     ["Comprar pasaje","https://www.skyscanner.com"],
-    ["Reserva Airbnb / alojamiento","https://www.airbnb.com"],
-    ["Medios económicos",""],
-    ["Fotos carnet",""],
-    ["Registro unión convivencial","https://www.argentina.gob.ar/justicia/registro-civil"],
-    ["Empadronamiento en España","https://www.boe.es"],
-    ["Solicitud visa / residencia","https://www.exteriores.gob.es"]
+    ["Reserva alojamiento","https://www.airbnb.com"],
+    ["Empadronamiento","https://www.boe.es"],
+    ["Solicitud residencia","https://www.exteriores.gob.es"]
   ],
   ambos: [
-    ["Unión convivencial firmada","https://www.argentina.gob.ar/justicia/registro-civil"],
-    ["Copia certificada unión",""],
+    ["Unión convivencial","https://www.argentina.gob.ar/justicia/registro-civil"],
     ["Apostilla unión","https://www.argentina.gob.ar/cancilleria/apostilla"],
-    ["Contrato o carta en España",""],
-    ["Reserva alojamiento inicial","https://www.airbnb.com"],
-    ["Copias en la nube","https://drive.google.com"],
-    ["Seguro médico ambos","https://www.axa-schengen.com"],
-    ["Empadronamiento en España","https://www.boe.es"],
+    ["Contrato en España",""],
     ["Turno extranjería","https://sede.administracionespublicas.gob.es"],
     ["NIE","https://sede.administracionespublicas.gob.es"],
     ["TIE","https://sede.administracionespublicas.gob.es"],
-    ["Apertura cuenta bancaria",""],
-    ["Canje licencia","https://www.dgt.es"],
-    ["Tarjeta sanitaria","https://www.seg-social.es"]
+    ["Cuenta bancaria",""],
+    ["Canje licencia","https://www.dgt.es"]
   ]
 };
 
 function render(section){
-  const ul = document.getElementById(section);
+  const ul=document.getElementById(section);
   data[section].forEach(([text,link])=>{
-    const key = section+"_"+text;
-    const li = document.createElement("li");
+    const key=section+"_"+text;
+    const li=document.createElement("li");
 
-    const span = document.createElement("span");
+    const span=document.createElement("span");
     span.className="item";
     span.textContent=text;
 
-    const sel = document.createElement("select");
+    const sel=document.createElement("select");
     ["Pendiente","En proceso","Hecho"].forEach(s=>{
-      const o = document.createElement("option");
+      const o=document.createElement("option");
       o.value=s; o.text=s;
       sel.appendChild(o);
     });
-    sel.value = localStorage.getItem(key) || "Pendiente";
-    sel.onchange = ()=>{ localStorage.setItem(key,sel.value); update(); };
+    sel.value=localStorage.getItem(key)||"Pendiente";
+    sel.onchange=()=>{localStorage.setItem(key,sel.value);update();};
 
     li.appendChild(span);
     li.appendChild(sel);
@@ -252,7 +228,7 @@ function render(section){
 }
 
 function update(){
-  let total=0, done=0;
+  let total=0,done=0;
   for(const sec in data){
     data[sec].forEach(([text])=>{
       total++;

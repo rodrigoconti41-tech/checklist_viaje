@@ -2,163 +2,278 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Move — Planificador de mudanza</title>
+<title>Move — Migration Planner</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
+<!-- =========================
+     FONTS
+========================= -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- =========================
+     GLOBAL STYLES
+========================= -->
 <style>
-:root{
-  --bg:#f7f9fc;
-  --card:#ffffff;
-  --text:#0f172a;
-  --muted:#64748b;
-  --primary:#2563eb;
-  --accent:#f97316;
-  --border:#e2e8f0;
-  --radius:20px;
+
+/* ---------------------------
+   CSS VARIABLES
+--------------------------- */
+:root {
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --primary: #2563eb;
+  --secondary: #f97316;
+  --success: #22c55e;
+  --warning: #facc15;
+  --border: #e5e7eb;
+  --radius: 18px;
+  --shadow-soft: 0 10px 30px rgba(15,23,42,0.05);
+  --shadow-hover: 0 20px 50px rgba(15,23,42,0.08);
 }
 
-*{box-sizing:border-box;}
-
-body{
-  margin:0;
-  background:var(--bg);
-  font-family:'Inter',system-ui,sans-serif;
-  color:var(--text);
-  padding:40px 20px;
+/* ---------------------------
+   RESET
+--------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.app{
-  max-width:1100px;
-  margin:0 auto;
+/* ---------------------------
+   BODY
+--------------------------- */
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 40px 20px;
 }
 
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:40px;
+/* ---------------------------
+   APP CONTAINER
+--------------------------- */
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.brand{
-  font-size:1.5rem;
-  font-weight:700;
+/* ---------------------------
+   HEADER
+--------------------------- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
 }
 
-.brand span{
-  color:var(--primary);
+.brand {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-.tagline{
-  color:var(--muted);
-  font-size:0.95rem;
+.brand span {
+  color: var(--primary);
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:24px;
+.subtitle {
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:24px;
-  box-shadow:0 12px 30px rgba(15,23,42,0.04);
-  transition:transform 0.3s ease, box-shadow 0.3s ease;
+/* ---------------------------
+   GRID LAYOUT
+--------------------------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-bottom: 48px;
 }
 
-.card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 20px 40px rgba(15,23,42,0.08);
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.card h2{
-  margin-top:0;
-  font-size:1.1rem;
-  margin-bottom:16px;
+/* ---------------------------
+   CARD
+--------------------------- */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.35s ease;
+  position: relative;
 }
 
-li{
-  list-style:none;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:8px 0;
-  border-bottom:1px solid var(--border);
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
 }
 
-li:last-child{border-bottom:none;}
-
-.item{
-  flex:1;
-  font-size:0.95rem;
+.card h2 {
+  font-size: 1.15rem;
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-select{
-  border:1px solid var(--border);
-  border-radius:999px;
-  padding:4px 10px;
-  background:#fff;
-  font-size:0.8rem;
+.card h2 span {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 400;
 }
 
-a{
-  font-size:0.7rem;
-  color:var(--primary);
-  margin-left:6px;
-  text-decoration:none;
+/* ---------------------------
+   LIST
+--------------------------- */
+ul {
+  list-style: none;
 }
 
-.footer{
-  margin-top:40px;
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:24px;
-  box-shadow:0 12px 30px rgba(15,23,42,0.04);
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
 }
 
-progress{
-  width:100%;
-  height:16px;
-  border-radius:8px;
-  overflow:hidden;
+li:last-child {
+  border-bottom: none;
 }
 
-progress::-webkit-progress-bar{background:#e5e7eb;}
-progress::-webkit-progress-value{
-  background:linear-gradient(90deg,var(--primary),var(--accent));
-  transition:width 0.4s ease;
+.item {
+  flex: 1;
+  font-size: 0.9rem;
 }
 
-@media(max-width:900px){
-  .grid{grid-template-columns:1fr;}
+/* ---------------------------
+   STATUS SELECT
+--------------------------- */
+select {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
 }
+
+/* ---------------------------
+   LINK BADGE
+--------------------------- */
+.link {
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(37,99,235,0.1);
+  color: var(--primary);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.link:hover {
+  background: rgba(37,99,235,0.2);
+}
+
+/* ---------------------------
+   FOOTER / PROGRESS
+--------------------------- */
+.footer {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow-soft);
+}
+
+.footer h2 {
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+}
+
+progress {
+  width: 100%;
+  height: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+  background: #e5e7eb;
+}
+
+progress::-webkit-progress-value {
+  background: linear-gradient(90deg,var(--primary),var(--secondary));
+  transition: width 0.4s ease;
+}
+
+/* ---------------------------
+   MONO DETAILS (fancy)
+--------------------------- */
+.meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
 </style>
 </head>
 <body>
 
 <div class="app">
-  <header>
-    <div>
-      <div class="brand">Move<span>.</span></div>
-      <div class="tagline">Tu mudanza, ordenada.</div>
-    </div>
-  </header>
 
-  <div class="grid">
-    <div class="card"><h2>Rodri</h2><ul id="rodri"></ul></div>
-    <div class="card"><h2>Mai</h2><ul id="mai"></ul></div>
-    <div class="card"><h2>Ambos</h2><ul id="ambos"></ul></div>
+<header>
+  <div>
+    <div class="brand">Move<span>.</span></div>
+    <div class="subtitle">Migration & Relocation Planner</div>
+  </div>
+  <div class="meta">v1.0.0 • internal build</div>
+</header>
+
+<div class="grid">
+  <div class="card">
+    <h2>Rodri <span>Personal</span></h2>
+    <ul id="rodri"></ul>
   </div>
 
-  <div class="footer">
-    <h2>Progreso</h2>
-    <progress id="prog" value="0" max="1"></progress>
+  <div class="card">
+    <h2>Mai <span>Personal</span></h2>
+    <ul id="mai"></ul>
+  </div>
+
+  <div class="card">
+    <h2>Ambos <span>Shared</span></h2>
+    <ul id="ambos"></ul>
   </div>
 </div>
 
+<div class="footer">
+  <h2>Overall progress</h2>
+  <progress id="prog" value="0" max="1"></progress>
+</div>
+
+</div>
+
+<!-- =========================
+     APPLICATION LOGIC
+========================= -->
 <script>
+
+/* ---------------------------
+   DATA MODEL
+--------------------------- */
 const data = {
   rodri: [
     ["Pasaporte argentino","https://www.argentina.gob.ar/interior/dni/pasaporte"],
@@ -195,31 +310,43 @@ const data = {
   ]
 };
 
+/* ---------------------------
+   RENDER FUNCTION
+--------------------------- */
 function render(section){
-  const ul=document.getElementById(section);
-  data[section].forEach(([text,link])=>{
-    const key=section+"_"+text;
-    const li=document.createElement("li");
+  const ul = document.getElementById(section);
 
-    const span=document.createElement("span");
-    span.className="item";
-    span.textContent=text;
+  data[section].forEach(([text, link]) => {
+    const key = section + "_" + text;
 
-    const sel=document.createElement("select");
+    const li = document.createElement("li");
+
+    const span = document.createElement("span");
+    span.className = "item";
+    span.textContent = text;
+
+    const sel = document.createElement("select");
     ["Pendiente","En proceso","Hecho"].forEach(s=>{
       const o=document.createElement("option");
       o.value=s; o.text=s;
       sel.appendChild(o);
     });
-    sel.value=localStorage.getItem(key)||"Pendiente";
-    sel.onchange=()=>{localStorage.setItem(key,sel.value);update();};
+
+    sel.value = localStorage.getItem(key) || "Pendiente";
+    sel.onchange = () => {
+      localStorage.setItem(key, sel.value);
+      update();
+    };
 
     li.appendChild(span);
     li.appendChild(sel);
 
     if(link){
-      const a=document.createElement("a");
-      a.href=link; a.target="_blank"; a.textContent="link";
+      const a = document.createElement("a");
+      a.href = link;
+      a.target = "_blank";
+      a.textContent = "Abrir guía";
+      a.className = "link";
       li.appendChild(a);
     }
 
@@ -227,22 +354,33 @@ function render(section){
   });
 }
 
+/* ---------------------------
+   PROGRESS UPDATE
+--------------------------- */
 function update(){
-  let total=0,done=0;
+  let total = 0;
+  let done = 0;
+
   for(const sec in data){
     data[sec].forEach(([text])=>{
       total++;
       if(localStorage.getItem(sec+"_"+text)==="Hecho") done++;
     });
   }
-  const p=document.getElementById("prog");
-  p.max=total; p.value=done;
+
+  const p = document.getElementById("prog");
+  p.max = total;
+  p.value = done;
 }
 
+/* ---------------------------
+   INIT
+--------------------------- */
 render("rodri");
 render("mai");
 render("ambos");
 update();
+
 </script>
 
 </body>

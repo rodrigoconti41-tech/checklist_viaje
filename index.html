@@ -4,248 +4,115 @@
 <meta charset="UTF-8">
 <title>Move — Migration Planner</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-/* === VARIABLES === */
 :root{
-  --bg:#f6f3ec;
-  --surface:#ffffff;
-  --text:#1f2937;
-  --muted:#6b7280;
-  --gold:#c6a24f;
-  --red:#b13b3b;
-  --blue:#2c3e73;
-  --border:#e5e1d8;
-  --radius:22px;
-  --shadow:0 14px 34px rgba(0,0,0,0.08);
+  --bg:#f6f3ec; --surface:#fff; --text:#1f2937; --muted:#6b7280;
+  --gold:#c6a24f; --red:#b13b3b; --blue:#2c3e73; --border:#e5e1d8;
+  --radius:22px; --shadow:0 14px 34px rgba(0,0,0,0.08);
 }
-
-/* === RESET === */
 *{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:linear-gradient(180deg,#f9f6ef,#f3efe6);padding:40px;}
+.app{max-width:1200px;margin:auto;}
 
-/* === BASE === */
-body{
-  font-family:'Inter',system-ui,sans-serif;
-  background:linear-gradient(180deg,#f9f6ef 0%, #f3efe6 100%);
-  color:var(--text);
-  padding:40px 20px;
-}
+.branding{background:var(--surface);padding:32px;border-radius:36px;border:2px solid var(--gold);box-shadow:var(--shadow);margin-bottom:24px;text-align:center;}
+.brand-title{font-family:'Cinzel',serif;font-size:2.2rem;color:var(--blue);}
+.brand-sub{color:var(--muted);}
 
-.app{max-width:1200px;margin:0 auto;}
+.view{display:none;}
+.view.active{display:block;}
 
-/* === BRAND === */
-.branding{
-  background:var(--surface);
-  border-radius:36px;
-  padding:32px 32px;
-  margin-bottom:24px;
-  box-shadow:var(--shadow);
-  border:2px solid var(--gold);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:20px;
-  flex-wrap:wrap;
-}
+.config, .footer, .card{background:var(--surface);padding:24px;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:24px;}
+.config h2{font-family:'Cinzel',serif;color:var(--red);margin-bottom:12px;}
+.config-row{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
+input,select{padding:6px 10px;border-radius:8px;border:1px solid var(--border);}
 
-.brand-title{
-  font-family:'Cinzel',serif;
-  font-size:2.2rem;
-  letter-spacing:0.1em;
-  color:var(--blue);
-}
+button{padding:10px 18px;border-radius:999px;border:none;background:var(--blue);color:white;font-weight:600;cursor:pointer;}
+button:hover{opacity:0.9;}
 
-.brand-sub{margin-top:4px;color:var(--muted);font-size:0.9rem;}
-
-/* === COUNTDOWN === */
-.countdown{
-  text-align:right;
-  font-size:0.85rem;
-  color:var(--red);
-}
-
-.countdown span{
-  display:inline-block;
-  min-width:60px;
-  font-weight:600;
-}
-
-/* === CONFIG === */
-.config{
-  background:var(--surface);
-  border-radius:var(--radius);
-  padding:24px;
-  margin-bottom:32px;
-  box-shadow:var(--shadow);
-  border:1px solid var(--border);
-}
-
-.config h2{
-  font-family:'Cinzel',serif;
-  color:var(--red);
-  margin-bottom:16px;
-}
-
-.config-row{
-  display:flex;
-  gap:16px;
-  flex-wrap:wrap;
-  margin-bottom:12px;
-}
-
-.config-row input, .config-row select{
-  padding:6px 10px;
-  border-radius:10px;
-  border:1px solid var(--border);
-}
-
-/* === GRID === */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:32px;}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
 @media(max-width:900px){.grid{grid-template-columns:1fr;}}
 
-/* === CARD === */
-.card{
-  background:var(--surface);
-  border-radius:var(--radius);
-  padding:28px;
-  box-shadow:var(--shadow);
-  border:1px solid var(--border);
-}
-
-.card h2{
-  font-family:'Cinzel',serif;
-  color:var(--red);
-  text-align:center;
-  margin-bottom:18px;
-}
-
-/* === LIST === */
+.card h2{font-family:'Cinzel',serif;color:var(--red);text-align:center;margin-bottom:12px;}
 ul{list-style:none;}
-li{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);gap:12px;}
-li:last-child{border-bottom:none;}
-.item{flex:1;font-size:0.9rem;}
+li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
+.item{flex:1;}
 
-select{
-  font-size:0.75rem;
-  padding:4px 10px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:#fff;
-}
-
-/* === FOOTER === */
-.footer{
-  background:var(--surface);
-  border-radius:var(--radius);
-  padding:24px;
-  box-shadow:var(--shadow);
-  border:2px solid var(--gold);
-}
-
-.progress-wrap{display:flex;align-items:center;gap:12px;}
-.flag{font-size:1.6rem;}
-
-.progress-container{
-  position:relative;
-  flex:1;
-  height:18px;
-  background:#e5e1d8;
-  border-radius:10px;
-  overflow:hidden;
-}
-
-.progress-bar{
-  position:absolute;
-  left:0;top:0;height:100%;
-  background:linear-gradient(90deg,var(--blue),var(--gold),var(--red));
-  width:0%;
-  transition:width 0.4s ease;
-}
-
-.plane{
-  position:absolute;
-  top:-14px;
-  transform:translateX(-50%);
-  transition:left 0.4s ease;
-  font-size:1.4rem;
-}
+.progress-wrap{display:flex;align-items:center;gap:10px;}
+.progress-container{flex:1;height:16px;background:#e5e1d8;border-radius:8px;overflow:hidden;position:relative;}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--blue),var(--gold),var(--red));width:0%;transition:0.4s;}
+.plane{position:absolute;top:-14px;transform:translateX(-50%);transition:0.4s;font-size:1.3rem;}
 </style>
 </head>
 <body>
 
 <div class="app">
 
-<!-- HEADER -->
 <div class="branding">
-  <div>
-    <div class="brand-title">MOVE</div>
-    <div class="brand-sub">Tu mudanza, diseñada con calma.</div>
-  </div>
-  <div class="countdown" id="countdown"></div>
+  <div class="brand-title">MOVE</div>
+  <div class="brand-sub">Tu mudanza, diseñada con calma.</div>
 </div>
 
-<!-- CONFIGURACIÓN -->
-<div class="config">
-  <h2>Configuración</h2>
-  <div class="config-row">
-    <label>Fecha del viaje:
-      <input type="datetime-local" id="dateInput">
-    </label>
-  </div>
-  <div class="config-row">
-    <label>¿Cuántas personas?
-      <input type="number" id="peopleCount" min="1" max="5" value="2">
-    </label>
-  </div>
-  <div id="peopleConfig"></div>
-</div>
-
-<!-- CHECKLIST -->
-<div class="grid" id="checklistGrid"></div>
-
-<!-- PROGRESO -->
-<div class="footer">
-  <h2 style="text-align:center;font-family:'Cinzel',serif;color:var(--red);margin-bottom:16px;">Progreso</h2>
-  <div class="progress-wrap">
-    <div class="flag">🇦🇷</div>
-    <div class="progress-container">
-      <div class="progress-bar" id="bar"></div>
-      <div class="plane" id="plane">✈️</div>
+<div id="configView" class="view active">
+  <div class="config">
+    <h2>Configuración</h2>
+    <div class="config-row">
+      <label>Fecha del viaje <input type="datetime-local" id="dateInput"></label>
     </div>
-    <div class="flag">🇪🇸</div>
+    <div class="config-row">
+      <label>Personas <input type="number" id="peopleCount" min="1" max="5" value="2"></label>
+    </div>
+    <div id="peopleConfig"></div>
+    <button onclick="start()">Continuar</button>
+  </div>
+</div>
+
+<div id="appView" class="view">
+  <div class="grid" id="checklistGrid"></div>
+
+  <div class="footer">
+    <div class="progress-wrap">
+      <span>🇦🇷</span>
+      <div class="progress-container">
+        <div class="progress-bar" id="bar"></div>
+        <div class="plane" id="plane">✈️</div>
+      </div>
+      <span>🇪🇸</span>
+    </div>
   </div>
 </div>
 
 </div>
 
 <script>
-let people = [];
+let people=[];
 
-const baseTasksEU = ["Empadronamiento","Cuenta bancaria","Canje licencia"];
-const baseTasksNoEU = ["Solicitud visa","NIE","TIE"];
-
-document.getElementById("peopleCount").addEventListener("change",renderPeopleConfig);
-document.getElementById("dateInput").addEventListener("change",updateCountdown);
+document.getElementById("peopleCount").onchange=renderPeopleConfig;
 
 function renderPeopleConfig(){
-  const n = parseInt(document.getElementById("peopleCount").value);
-  const container = document.getElementById("peopleConfig");
-  container.innerHTML="";
+  const n=+peopleCount.value;
+  const c=document.getElementById("peopleConfig");
+  c.innerHTML="";
   people=[];
   for(let i=0;i<n;i++){
     const row=document.createElement("div");
     row.className="config-row";
-    row.innerHTML = `
+    row.innerHTML=`
       <input placeholder="Nombre" onchange="people[${i}]={...people[${i}],name:this.value}">
       <select onchange="people[${i}]={...people[${i}],eu:this.value==='yes'}">
         <option value="no">Sin ciudadanía UE</option>
         <option value="yes">Con ciudadanía UE</option>
-      </select>
-    `;
-    container.appendChild(row);
+      </select>`;
+    c.appendChild(row);
   }
+}
+renderPeopleConfig();
+
+function start(){
+  document.getElementById("configView").classList.remove("active");
+  document.getElementById("appView").classList.add("active");
+  renderChecklist();
 }
 
 function renderChecklist(){
@@ -256,10 +123,10 @@ function renderChecklist(){
     card.className="card";
     card.innerHTML=`<h2>${p.name||"Persona "+(i+1)}</h2><ul></ul>`;
     const ul=card.querySelector("ul");
-    const tasks = p.eu ? baseTasksEU : baseTasksNoEU;
+    const tasks=p.eu?["Empadronamiento","Cuenta bancaria","Canje licencia"]:["Solicitud visa","NIE","TIE"];
     tasks.forEach(t=>{
       const li=document.createElement("li");
-      li.innerHTML=`<span class="item">${t}</span><select><option>Pendiente</option><option>Hecho</option></select>`;
+      li.innerHTML=`<span class="item">${t}</span><select onchange="updateProgress()"><option>Pendiente</option><option>Hecho</option></select>`;
       ul.appendChild(li);
     });
     grid.appendChild(card);
@@ -269,32 +136,18 @@ function renderChecklist(){
 
 function updateProgress(){
   let total=0,done=0;
-  document.querySelectorAll(".grid select").forEach(s=>{
+  document.querySelectorAll("#checklistGrid select").forEach(s=>{
     total++;
     if(s.value==="Hecho") done++;
-    s.onchange=updateProgress;
   });
-  const percent = total?done/total*100:0;
-  document.getElementById("bar").style.width=percent+"%";
-  document.getElementById("plane").style.left=percent+"%";
+  const percent=total?done/total*100:0;
+  bar.style.width=percent+"%";
+  plane.style.left=percent+"%";
 }
+</script>
 
-function updateCountdown(){
-  const target = new Date(document.getElementById("dateInput").value);
-  if(!target) return;
-  setInterval(()=>{
-    const now=new Date();
-    let diff=target-now;
-    if(diff<0) diff=0;
-    const s=Math.floor(diff/1000)%60;
-    const m=Math.floor(diff/60000)%60;
-    const h=Math.floor(diff/3600000)%24;
-    const d=Math.floor(diff/86400000)%30;
-    const mo=Math.floor(diff/2592000000);
-    document.getElementById("countdown").innerHTML =
-      `${mo}m ${d}d ${h}h ${m}m ${s}s`;
-  },1000);
-}
+</body>
+</html>
 
 renderPeopleConfig();
 </script>

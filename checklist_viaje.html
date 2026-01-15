@@ -1,0 +1,10 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>Checklist viaje</title><style>body{font-family:sans-serif;padding:20px} li{margin:8px 0}</style></head><body><h1>Checklist pre‑viaje a España</h1><p>Los checks se guardan en este navegador automáticamente.</p><h2>🧍‍♂️ Rodri</h2><ul id='rodri'></ul><h2>🧍‍♀️ Mai</h2><ul id='mai'></ul><h2>👫 Ambos</h2><ul id='ambos'></ul><h2>Progreso</h2><progress id='prog' value='0' max='1' style='width:100%'></progress>
+<script>
+const rodriItems=["Pasaporte argentino vigente","Pasaporte español vigente","DNI argentino","Licencia apostillada","CV armado","Seguro médico","Comprar pasaje","Copias digitales"];
+const maiItems=["Pasaporte vigente","Analítico apostillado","Antecedentes apostillados","Seguro médico","Comprar pasaje","Reserva Airbnb / alojamiento","Certificado de nacimiento apostillado","Fotos carnet","Empadronamiento en España"];
+const ambosItems=["Unión convivencial","Copia certificada unión","Apostilla unión","Contrato o carta en España","Reserva alojamiento inicial","Copias en la nube","Seguro médico ambos","Empadronamiento en España","Turno extranjería","NIE/TIE","Apertura cuenta bancaria","Canje licencia"];
+function load(id,items){const ul=document.getElementById(id);ul.innerHTML='';items.forEach(t=>{const li=document.createElement('li');const c=document.createElement('input');c.type='checkbox';const key=id+"_"+t;c.checked=localStorage.getItem(key)==="1";c.onchange=()=>{localStorage.setItem(key,c.checked?"1":"0");update();};li.appendChild(c);li.appendChild(document.createTextNode(" "+t));ul.appendChild(li);});}
+load('rodri',rodriItems);load('mai',maiItems);load('ambos',ambosItems);
+function update(){let total=rodriItems.length+maiItems.length+ambosItems.length;let done=0;[['rodri',rodriItems],['mai',maiItems],['ambos',ambosItems]].forEach(p=>{p[1].forEach(t=>{if(localStorage.getItem(p[0]+"_"+t)==="1") done++;});});const pr=document.getElementById('prog');pr.max=total;pr.value=done;}
+update();
+</script></body></html>

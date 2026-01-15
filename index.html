@@ -5,332 +5,203 @@
 <title>Move — Migration Planner</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- =========================
-     FONTS
-========================= -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
-<!-- =========================
-     GLOBAL STYLES
-========================= -->
-<style /* =========================
-   BRAND HEADER STYLE
-========================= */
-
-.branding {
-  position: relative;
-  padding: 36px 24px;
-  margin-bottom: 48px;
-  border-radius: 28px;
-  background:
-    linear-gradient(135deg, #f7f9fc 0%, #ffffff 100%);
-  box-shadow: 0 18px 40px rgba(15,23,42,0.06);
-  overflow: hidden;
+<style>
+:root {
+  --bg:#f6f8fb;
+  --surface:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b;
+  --primary:#2563eb;
+  --secondary:#f97316;
+  --border:#e5e7eb;
+  --radius:22px;
+  --shadow-soft:0 12px 30px rgba(15,23,42,0.05);
+  --shadow-hover:0 20px 50px rgba(15,23,42,0.08);
 }
 
-.branding::before,
-.branding::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:28px;
-  pointer-events:none;
+* { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  padding:40px 20px;
+}
+
+.app {
+  max-width:1200px;
+  margin:0 auto;
+}
+
+/* ===== BRAND HEADER ===== */
+
+.branding {
+  position:relative;
+  padding:40px 28px;
+  margin-bottom:48px;
+  border-radius:30px;
+  background:linear-gradient(135deg,#f7f9fc 0%,#ffffff 100%);
+  box-shadow:0 18px 40px rgba(15,23,42,0.06);
+  overflow:hidden;
 }
 
 .branding::before {
-  border: 2px solid rgba(37,99,235,0.12);
+  content:"";
+  position:absolute;
+  inset:0;
+  border:2px solid rgba(37,99,235,0.12);
+  border-radius:30px;
 }
 
 .branding::after {
-  border: 2px dashed rgba(249,115,22,0.15);
-  inset:6px;
+  content:"";
+  position:absolute;
+  inset:8px;
+  border:2px dashed rgba(249,115,22,0.15);
+  border-radius:24px;
 }
 
 .brand-title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-size:2.4rem;
+  font-weight:700;
+  letter-spacing:-0.03em;
 }
 
-.brand-title span {
-  color: var(--primary);
-}
+.brand-title span { color:var(--primary); }
 
 .brand-sub {
-  margin-top: 8px;
-  font-size: 1rem;
-  color: var(--muted);
+  margin-top:10px;
+  font-size:1rem;
+  color:var(--muted);
 }
 
 .brand-meta {
   position:absolute;
-  right:24px;
   top:24px;
-  font-family:'JetBrains Mono', monospace;
+  right:28px;
+  font-family:'JetBrains Mono',monospace;
   font-size:0.7rem;
   color:var(--muted);
 }
->
 
-/* ---------------------------
-   CSS VARIABLES
---------------------------- */
-:root {
-  --bg: #f6f8fb;
-  --surface: #ffffff;
-  --text: #0f172a;
-  --muted: #64748b;
-  --primary: #2563eb;
-  --secondary: #f97316;
-  --success: #22c55e;
-  --warning: #facc15;
-  --border: #e5e7eb;
-  --radius: 18px;
-  --shadow-soft: 0 10px 30px rgba(15,23,42,0.05);
-  --shadow-hover: 0 20px 50px rgba(15,23,42,0.08);
-}
+/* ===== GRID ===== */
 
-/* ---------------------------
-   RESET
---------------------------- */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* ---------------------------
-   BODY
---------------------------- */
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  padding: 40px 20px;
-}
-
-/* ---------------------------
-   APP CONTAINER
---------------------------- */
-.app {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* ---------------------------
-   HEADER
---------------------------- */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 48px;
-}
-
-.brand {
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.brand span {
-  color: var(--primary);
-}
-
-.subtitle {
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-/* ---------------------------
-   GRID LAYOUT
---------------------------- */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  margin-bottom: 48px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+  margin-bottom:48px;
 }
 
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+@media(max-width:900px){
+  .grid { grid-template-columns:1fr; }
 }
 
-/* ---------------------------
-   CARD
---------------------------- */
+/* ===== CARD ===== */
+
 .card {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 28px;
-  box-shadow: var(--shadow-soft);
-  transition: all 0.35s ease;
-  position: relative;
+  background:var(--surface);
+  border-radius:var(--radius);
+  padding:28px;
+  box-shadow:var(--shadow-soft);
+  transition:all 0.35s ease;
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-hover);
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-hover);
 }
 
 .card h2 {
-  font-size: 1.15rem;
-  margin-bottom: 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-size:1.1rem;
+  margin-bottom:18px;
 }
 
-.card h2 span {
-  font-size: 0.75rem;
-  color: var(--muted);
-  font-weight: 400;
-}
+/* ===== LIST ===== */
 
-/* ---------------------------
-   LIST
---------------------------- */
-ul {
-  list-style: none;
-}
+ul { list-style:none; }
 
 li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-  gap: 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid var(--border);
+  gap:12px;
 }
 
-li:last-child {
-  border-bottom: none;
-}
+li:last-child { border-bottom:none; }
 
-.item {
-  flex: 1;
-  font-size: 0.9rem;
-}
+.item { flex:1; font-size:0.9rem; }
 
-/* ---------------------------
-   STATUS SELECT
---------------------------- */
 select {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.75rem;
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: #fff;
+  font-size:0.75rem;
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#fff;
 }
 
-/* ---------------------------
-   LINK BADGE
---------------------------- */
 .link {
-  font-size: 0.7rem;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: rgba(37,99,235,0.1);
-  color: var(--primary);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background 0.2s ease;
+  font-size:0.7rem;
+  padding:3px 8px;
+  border-radius:999px;
+  background:rgba(37,99,235,0.1);
+  color:var(--primary);
+  text-decoration:none;
 }
 
-.link:hover {
-  background: rgba(37,99,235,0.2);
-}
+.link:hover { background:rgba(37,99,235,0.2); }
 
-/* ---------------------------
-   FOOTER / PROGRESS
---------------------------- */
+/* ===== FOOTER ===== */
+
 .footer {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 28px;
-  box-shadow: var(--shadow-soft);
-}
-
-.footer h2 {
-  font-size: 1.1rem;
-  margin-bottom: 14px;
+  background:var(--surface);
+  border-radius:var(--radius);
+  padding:28px;
+  box-shadow:var(--shadow-soft);
 }
 
 progress {
-  width: 100%;
-  height: 16px;
-  border-radius: 8px;
-  overflow: hidden;
+  width:100%;
+  height:16px;
+  border-radius:8px;
+  overflow:hidden;
 }
 
-progress::-webkit-progress-bar {
-  background: #e5e7eb;
-}
-
+progress::-webkit-progress-bar { background:#e5e7eb; }
 progress::-webkit-progress-value {
-  background: linear-gradient(90deg,var(--primary),var(--secondary));
-  transition: width 0.4s ease;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  transition:width 0.4s ease;
 }
-
-/* ---------------------------
-   MONO DETAILS (fancy)
---------------------------- */
-.meta {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--muted);
-  margin-top: 6px;
-}
-
 </style>
 </head>
 <body>
 
 <div class="app">
 
-<header>
-  <div>
-    <div class="brand">Move<span>.</span></div>
-    <div class="subtitle">Migration & Relocation Planner</div>
-  </div>
-  <div class="meta">v1.0.0 • internal build</div>
-</header>
+<div class="branding">
+  <div class="brand-meta">Argentina → España</div>
+  <div class="brand-title">Move<span>.</span></div>
+  <div class="brand-sub">Tu mudanza, diseñada con calma.</div>
+</div>
 
 <div class="grid">
-  <div class="card">
-    <h2>Rodri <span>Personal</span></h2>
-    <ul id="rodri"></ul>
-  </div>
-
-  <div class="card">
-    <h2>Mai <span>Personal</span></h2>
-    <ul id="mai"></ul>
-  </div>
-
-  <div class="card">
-    <h2>Ambos <span>Shared</span></h2>
-    <ul id="ambos"></ul>
-  </div>
+  <div class="card"><h2>Rodri</h2><ul id="rodri"></ul></div>
+  <div class="card"><h2>Mai</h2><ul id="mai"></ul></div>
+  <div class="card"><h2>Ambos</h2><ul id="ambos"></ul></div>
 </div>
 
 <div class="footer">
-  <h2>Overall progress</h2>
+  <h2>Progreso</h2>
   <progress id="prog" value="0" max="1"></progress>
 </div>
 
 </div>
 
-<!-- =========================
-     APPLICATION LOGIC
-========================= -->
 <script>
-
-/* ---------------------------
-   DATA MODEL
---------------------------- */
 const data = {
   rodri: [
     ["Pasaporte argentino","https://www.argentina.gob.ar/interior/dni/pasaporte"],
@@ -367,43 +238,32 @@ const data = {
   ]
 };
 
-/* ---------------------------
-   RENDER FUNCTION
---------------------------- */
 function render(section){
-  const ul = document.getElementById(section);
+  const ul=document.getElementById(section);
+  data[section].forEach(([text,link])=>{
+    const key=section+"_"+text;
+    const li=document.createElement("li");
 
-  data[section].forEach(([text, link]) => {
-    const key = section + "_" + text;
+    const span=document.createElement("span");
+    span.className="item";
+    span.textContent=text;
 
-    const li = document.createElement("li");
-
-    const span = document.createElement("span");
-    span.className = "item";
-    span.textContent = text;
-
-    const sel = document.createElement("select");
+    const sel=document.createElement("select");
     ["Pendiente","En proceso","Hecho"].forEach(s=>{
       const o=document.createElement("option");
       o.value=s; o.text=s;
       sel.appendChild(o);
     });
-
-    sel.value = localStorage.getItem(key) || "Pendiente";
-    sel.onchange = () => {
-      localStorage.setItem(key, sel.value);
-      update();
-    };
+    sel.value=localStorage.getItem(key)||"Pendiente";
+    sel.onchange=()=>{localStorage.setItem(key,sel.value);update();};
 
     li.appendChild(span);
     li.appendChild(sel);
 
     if(link){
-      const a = document.createElement("a");
-      a.href = link;
-      a.target = "_blank";
-      a.textContent = "Abrir guía";
-      a.className = "link";
+      const a=document.createElement("a");
+      a.href=link; a.target="_blank"; a.textContent="Abrir guía";
+      a.className="link";
       li.appendChild(a);
     }
 
@@ -411,32 +271,27 @@ function render(section){
   });
 }
 
-/* ---------------------------
-   PROGRESS UPDATE
---------------------------- */
 function update(){
-  let total = 0;
-  let done = 0;
-
+  let total=0,done=0;
   for(const sec in data){
     data[sec].forEach(([text])=>{
       total++;
       if(localStorage.getItem(sec+"_"+text)==="Hecho") done++;
     });
   }
-
-  const p = document.getElementById("prog");
-  p.max = total;
-  p.value = done;
+  const p=document.getElementById("prog");
+  p.max=total; p.value=done;
 }
 
-/* ---------------------------
-   INIT
---------------------------- */
 render("rodri");
 render("mai");
 render("ambos");
 update();
+</script>
+
+</body>
+</html>
+
 
 </script>
 

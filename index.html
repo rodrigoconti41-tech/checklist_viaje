@@ -5,90 +5,80 @@
 <title>Move — Migration Planner</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg:#f6f8fb;
+:root{
+  --bg:#f6f3ec;
   --surface:#ffffff;
-  --text:#0f172a;
-  --muted:#64748b;
-  --primary:#2563eb;
-  --secondary:#f97316;
-  --border:#e5e7eb;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --gold:#c6a24f;
+  --red:#b13b3b;
+  --blue:#2c3e73;
+  --border:#e5e1d8;
   --radius:22px;
-  --shadow-soft:0 12px 30px rgba(15,23,42,0.05);
-  --shadow-hover:0 20px 50px rgba(15,23,42,0.08);
+  --shadow:0 14px 34px rgba(0,0,0,0.08);
 }
 
-* { box-sizing:border-box; margin:0; padding:0; }
+*{box-sizing:border-box;margin:0;padding:0;}
 
-body {
+body{
   font-family:'Inter',system-ui,sans-serif;
-  background:var(--bg);
+  background:linear-gradient(180deg,#f9f6ef 0%, #f3efe6 100%);
   color:var(--text);
   padding:40px 20px;
 }
 
-.app {
+.app{
   max-width:1200px;
   margin:0 auto;
 }
 
-/* ===== BRAND HEADER ===== */
+/* ===== FILETEADO HEADER ===== */
 
-.branding {
+.branding{
   position:relative;
-  padding:40px 28px;
-  margin-bottom:48px;
-  border-radius:30px;
-  background:linear-gradient(135deg,#f7f9fc 0%,#ffffff 100%);
-  box-shadow:0 18px 40px rgba(15,23,42,0.06);
+  background:var(--surface);
+  border-radius:36px;
+  padding:48px 32px;
+  margin-bottom:56px;
+  box-shadow:var(--shadow);
+  border:2px solid var(--gold);
   overflow:hidden;
 }
 
-.branding::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  border:2px solid rgba(37,99,235,0.12);
-  border-radius:30px;
+.filete-top,
+.filete-bottom{
+  width:100%;
+  height:36px;
 }
 
-.branding::after {
-  content:"";
-  position:absolute;
-  inset:8px;
-  border:2px dashed rgba(249,115,22,0.15);
-  border-radius:24px;
+.filete-top svg,
+.filete-bottom svg{
+  width:100%;
+  height:100%;
 }
 
-.brand-title {
-  font-size:2.4rem;
-  font-weight:700;
-  letter-spacing:-0.03em;
+.brand-title{
+  text-align:center;
+  font-family:'Cinzel',serif;
+  font-size:2.6rem;
+  letter-spacing:0.08em;
+  margin-top:12px;
+  color:var(--blue);
 }
 
-.brand-title span { color:var(--primary); }
-
-.brand-sub {
-  margin-top:10px;
+.brand-sub{
+  text-align:center;
+  margin-top:6px;
   font-size:1rem;
-  color:var(--muted);
-}
-
-.brand-meta {
-  position:absolute;
-  top:24px;
-  right:28px;
-  font-family:'JetBrains Mono',monospace;
-  font-size:0.7rem;
   color:var(--muted);
 }
 
 /* ===== GRID ===== */
 
-.grid {
+.grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:28px;
@@ -96,34 +86,42 @@ body {
 }
 
 @media(max-width:900px){
-  .grid { grid-template-columns:1fr; }
+  .grid{grid-template-columns:1fr;}
 }
 
 /* ===== CARD ===== */
 
-.card {
+.card{
   background:var(--surface);
   border-radius:var(--radius);
   padding:28px;
-  box-shadow:var(--shadow-soft);
-  transition:all 0.35s ease;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+  position:relative;
 }
 
-.card:hover {
-  transform:translateY(-6px);
-  box-shadow:var(--shadow-hover);
+.card::before{
+  content:"";
+  position:absolute;
+  inset:6px;
+  border:1px dashed var(--gold);
+  border-radius:var(--radius);
+  pointer-events:none;
 }
 
-.card h2 {
+.card h2{
+  font-family:'Cinzel',serif;
   font-size:1.1rem;
   margin-bottom:18px;
+  text-align:center;
+  color:var(--red);
 }
 
 /* ===== LIST ===== */
 
-ul { list-style:none; }
+ul{list-style:none;}
 
-li {
+li{
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -132,11 +130,11 @@ li {
   gap:12px;
 }
 
-li:last-child { border-bottom:none; }
+li:last-child{border-bottom:none;}
 
-.item { flex:1; font-size:0.9rem; }
+.item{flex:1;font-size:0.9rem;}
 
-select {
+select{
   font-size:0.75rem;
   padding:4px 10px;
   border-radius:999px;
@@ -144,36 +142,44 @@ select {
   background:#fff;
 }
 
-.link {
+.link{
   font-size:0.7rem;
   padding:3px 8px;
   border-radius:999px;
-  background:rgba(37,99,235,0.1);
-  color:var(--primary);
+  background:rgba(198,162,79,0.15);
+  color:var(--blue);
   text-decoration:none;
 }
 
-.link:hover { background:rgba(37,99,235,0.2); }
+.link:hover{background:rgba(198,162,79,0.25);}
 
 /* ===== FOOTER ===== */
 
-.footer {
+.footer{
   background:var(--surface);
   border-radius:var(--radius);
   padding:28px;
-  box-shadow:var(--shadow-soft);
+  box-shadow:var(--shadow);
+  border:2px solid var(--gold);
 }
 
-progress {
+.footer h2{
+  font-family:'Cinzel',serif;
+  color:var(--red);
+  text-align:center;
+  margin-bottom:14px;
+}
+
+progress{
   width:100%;
   height:16px;
   border-radius:8px;
   overflow:hidden;
 }
 
-progress::-webkit-progress-bar { background:#e5e7eb; }
-progress::-webkit-progress-value {
-  background:linear-gradient(90deg,var(--primary),var(--secondary));
+progress::-webkit-progress-bar{background:#e5e1d8;}
+progress::-webkit-progress-value{
+  background:linear-gradient(90deg,var(--blue),var(--gold),var(--red));
   transition:width 0.4s ease;
 }
 </style>
@@ -183,9 +189,26 @@ progress::-webkit-progress-value {
 <div class="app">
 
 <div class="branding">
-  <div class="brand-meta">Argentina → España</div>
-  <div class="brand-title">Move<span>.</span></div>
+
+  <div class="filete-top">
+    <svg viewBox="0 0 800 40" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 20 Q50 0 100 20 T200 20 T300 20 T400 20 T500 20 T600 20 T700 20 T800 20"
+            fill="none" stroke="#c6a24f" stroke-width="2"/>
+      <circle cx="400" cy="20" r="4" fill="#b13b3b"/>
+    </svg>
+  </div>
+
+  <div class="brand-title">MOVE</div>
   <div class="brand-sub">Tu mudanza, diseñada con calma.</div>
+
+  <div class="filete-bottom">
+    <svg viewBox="0 0 800 40" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 20 Q50 40 100 20 T200 20 T300 20 T400 20 T500 20 T600 20 T700 20 T800 20"
+            fill="none" stroke="#c6a24f" stroke-width="2"/>
+      <circle cx="400" cy="20" r="4" fill="#b13b3b"/>
+    </svg>
+  </div>
+
 </div>
 
 <div class="grid">
@@ -287,12 +310,6 @@ render("rodri");
 render("mai");
 render("ambos");
 update();
-</script>
-
-</body>
-</html>
-
-
 </script>
 
 </body>
